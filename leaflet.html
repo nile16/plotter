@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Plotter</title>
+	<meta name="description" content="Jättefin karta">
+	<meta charset='utf-8' />
+	<meta name="viewport" content="width=device-width, height=device-height, user-scalable=no"> 
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+</head>
+
+<style>
+
+.iconImage {
+	position:absolute;
+	width: 12px; 
+	height: 32px;
+	margin:0px;
+}
+
+.iconName {
+	position:absolute;
+	left:20px;          
+	font-size:12px;
+	white-space: nowrap;
+	background-color:#fff;
+	border-radius: 3px;
+	border-style:solid;
+	border-width: 1px;
+	padding:0px 3px 0px 3px;
+}
+</style>
+
+<body>
+ <div id="mapDiv" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:grey"></div>
+</body>
+
+
+<script>
+
+////////////////
+// Create map //
+////////////////
+	
+var map = new L.Map('mapDiv', { doubleClickZoom:false, zoomControl:true, maxBounds:([[90,-270],[-90,270]]) }); // Global variable that represent the map
+
+// OpenStreetMap layer
+var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osm = new L.TileLayer(osmUrl, {minZoom:2, maxZoom:19});		
+
+// Google Map layer
+var googleStreets = new L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{minZoom:1, maxZoom:19, subdomains:['mt0','mt1','mt2','mt3']});
+
+// Google Earth layer
+var googleSat = new L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{minZoom:1, maxZoom: 19,subdomains:['mt0','mt1','mt2','mt3']});
+
+map.attributionControl.setPrefix(""); // Remove attribution
+
+map.addLayer(googleStreets); // Add google maps as default to our map
+
+L.control.layers({"Google Street": googleStreets, "Google Earth": googleSat, "OSM (Mapnik)": osm}).addTo(map); // Selectable maps
+
+L.control.scale({imperial:false}).addTo(map); // Add metric scale
+
+/////////////////
+// Add markers //
+/////////////////
+
+var markers = L.featureGroup([
+	L.marker([56.16424,14.86625],{icon:L.icon({iconUrl: "bth.png",iconSize:[32, 32],iconAnchor:[16, 16]})}).bindPopup("BTH<br><a href='http://www.bth.se/'>www.bth.se</a>",{offset:[0,-30]}),
+	L.marker([56.16077,15.13303],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Nils Leandersson</div>',iconAnchor:[6, 32]})}).bindPopup("Väbynäsvägen 48<br>37263 Bräkne-Hoby",{offset:[0,-30]}),
+	L.marker([56.17506,14.86637],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Simon Persson</div>',iconAnchor:[6, 32]})}).bindPopup("Landsvägen 1062<br>Karlshamn",{offset:[0,-30]}),
+	L.marker([62.99960,17.65161],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Alexander Sohlin</div>',iconAnchor:[6, 32]})}).bindPopup("Timotejvägen 27<br>Bollstabruk",{offset:[0,-30]}),
+	L.marker([56.80425,12.96349],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Simon Gruber</div>',iconAnchor:[6, 32]})}).bindPopup("Björkallen 19",{offset:[0,-30]}),
+	L.marker([56.18978,15.59464],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >William Meeuwisse</div>',iconAnchor:[6, 32]})}).bindPopup("Ringvägen 19<br>37141 karlskrona",{offset:[0,-30]}),
+	L.marker([57.65231,12.10193],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Markus Mario Lindström</div>',iconAnchor:[6, 32]})}).bindPopup("Kullbäckstorpsvägen 21<br>43542 Mölnlycke",{offset:[0,-30]}),
+	L.marker([56.17367,14.86455],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Jesper Truedsson</div>',iconAnchor:[6, 32]})}).bindPopup("Hantverkaregatan 91b<br>Karlshamn",{offset:[0,-30]}),
+	L.marker([59.68496,16.62737],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Malin Bredin</div>',iconAnchor:[6, 32]})}).bindPopup("Egnahemsvägen 4A<br>Västerås",{offset:[0,-30]}),
+	L.marker([55.71025,13.18245],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Jonathan Franke</div>',iconAnchor:[6, 32]})}).bindPopup("Tryckerigatan 4<br>Lund",{offset:[0,-30]}),
+	L.marker([56.42898,12.85020],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="p.png"></div><div class="iconName" >Simon Larsson</div>',iconAnchor:[6, 32]})}).bindPopup("Sjövägen 10<br>Båstad",{offset:[0,-30]})
+
+//	L.marker([],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="r.png"></div><div class="iconName" ></div>',iconAnchor:[6, 32]})}).bindPopup("",{offset:[0,-30]}),
+//	L.marker([],{icon:L.divIcon({className: 'my-div-icon',html:'<div><img class="iconImage" src="r.png"></div><div class="iconName" ></div>',iconAnchor:[6, 32]})}).bindPopup("",{offset:[0,-30]}),
+]).addTo(map);
+
+map.fitBounds(markers.getBounds(), { padding: [30, 30] }); // Zoom in around the markers
+
+
+
+</script>
+
+</html>

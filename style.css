@@ -1,0 +1,31 @@
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	line-height: 1.5;
+}
+#map {
+	height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+.infowrap {
+height:110px;
+width:250px;
+}
+
+.photowrap {
+height:100px;
+width:75px;
+float:left;
+margin-right:10px;
+}
+
+.photowrap img {
+height:100%;
+width:100%;
+}
